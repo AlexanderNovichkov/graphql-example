@@ -1,0 +1,50 @@
+type Game {
+    id: ID!
+    players: [Player!]!
+    comments: [Comment!]!
+    status: GameStatus!
+}
+
+type Player {
+    name: String!
+    role: Role!
+    isAlive: Boolean!
+}
+
+type Comment {
+    text: String!
+}
+
+enum Role {
+    CIVILIAN
+    MAFIA
+    COMMISSAR
+}
+
+enum GameStatus {
+    NotFinished
+    MafiaWon
+    CivilianWon
+}
+
+input PlayerInput {
+    name: String!
+    role: Role!
+    isAlive: Boolean!
+}
+
+input CommentInput {
+    text: String!
+}
+
+type Mutation {
+    createGame(players: [PlayerInput!]!, comments: [CommentInput!]!, status: GameStatus!): Game!
+    updateGame(id:ID!, players: [PlayerInput!]!, comments: [CommentInput!]!, status:GameStatus!): Game!
+    addComment(id: ID!, comment: CommentInput): Game!
+}
+
+
+type Query {
+    game(id: ID!): Game!
+    games(isFinished:Boolean): [Game!]!
+}

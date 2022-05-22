@@ -56,6 +56,9 @@ func (r *mutationResolver) AddComment(ctx context.Context, id string, comment *g
 	}
 
 	game, err := r.Repository.GetGame(idParsed)
+	if err != nil {
+		return nil, err
+	}
 
 	game.Comments = append(game.Comments, converter.CommentInputToCommentDB(comment))
 
